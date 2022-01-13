@@ -1,0 +1,18 @@
+.price {
+    min-width: 4em;
+    display: inline-block;
+}
+
+.hint {
+    font-size: 85%;
+    margin: 0 0 -0.5em 0.5em;
+    color: #aaa;
+}
+
+.flexed {
+    display: inline-flex;
+    gap: 10px;
+    justify-content: space-evenly;
+    align-items: center;
+    flex-wrap: wrap;
+}

@@ -1,0 +1,11 @@
+<div>
+    <span i18n>Total: </span> {{ (sums$ | async)?.total }}&euro;
+    <ng-container *ngIf="diff$ | async as diff">
+        &nbsp;<span *ngIf="!diff.ok">({{diff.v}}&euro;&ngsp;<ng-container i18n>à répartir.</ng-container>)</span>
+    </ng-container>
+</div>
+
+<div *ngFor="let sum of (sums$ | async)?.peoples; last as last">
+    <div><app-people [people]="sum.people" ></app-people> {{ sum.value }}&euro;</div>
+    <div *ngIf="!last" class="small-space"></div>
+</div>

@@ -1,0 +1,29 @@
+<mat-list xmlns="http://www.w3.org/1999/html">
+    <mat-list-item *ngFor="let note of (notes$ | async)" style="height: initial">
+        <app-note [id]="note.id"></app-note>
+    </mat-list-item>
+</mat-list>
+
+<div data-html2canvas-ignore>
+    <mat-form-field appearance="standard" color="accent">
+        <input #text matInput placeholder="Walmart xxx"/>
+        <mat-hint i18n>Details</mat-hint>
+    </mat-form-field>
+    &nbsp;
+    <mat-form-field appearance="standard" color="accent">
+        <mat-icon matPrefix>euro</mat-icon>
+        <input #value matInput [type]="'number'" placeholder="11.53" (beforeinput)="testAdd($event, value, text)"/>
+
+        <mat-hint i18n>Amount</mat-hint>
+    </mat-form-field>
+
+    <button  mat-icon-button
+            color="accent" (click)="addNote(value, text)">
+        <mat-icon>add_shopping_cart</mat-icon>
+    </button>
+
+    <button mat-icon-button matTooltip="Delete all tickets" i18n-matTooltip="Delete all tickets"
+            color="accent" (click)="clear()">
+        <mat-icon>delete_all</mat-icon>
+    </button>
+</div>

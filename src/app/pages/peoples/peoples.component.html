@@ -1,0 +1,31 @@
+<mat-card>
+    <mat-card-title i18n>Peoples</mat-card-title>
+    <mat-card-content>
+        <mat-list>
+            <mat-chip-list *ngFor="let people of (peoples$ |async)">
+                <button mat-button color="primary" (click)="deletePeople(people)">
+                    <mat-icon>delete</mat-icon>
+                </button>
+                <app-people [people]="people"></app-people>
+            </mat-chip-list>
+        </mat-list>
+
+        <div fxLayoutAlign="center center">
+            <mat-form-field appearance="standard" color="accent">
+                <mat-label i18n>New person</mat-label>
+                <input #newPeopleInput matInput i18n-placeholder="Name" placeholder="Name"/>
+                <button matSuffix
+                        mat-icon-button
+                        color="accent" (click)="addPeople(newPeopleInput)">
+                    <mat-icon>person_add</mat-icon>
+                </button>
+                <mat-hint i18n>Enter the name of the person</mat-hint>
+            </mat-form-field>
+            <app-colored-circle  [matMenuTriggerFor]="menu" [color]="currentColor$ | async"></app-colored-circle>
+            <mat-menu #menu="matMenu">
+                <app-color-picker [initialColor]="currentColor$.value" (selectedColor)="currentColor$.next($event)"></app-color-picker>
+            </mat-menu>
+        </div>
+
+    </mat-card-content>
+</mat-card>

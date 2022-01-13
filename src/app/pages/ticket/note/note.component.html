@@ -1,0 +1,18 @@
+<div *ngIf="note$ | async as note">
+    <div *ngIf="note.details" class="hint"> {{note.details}}</div>
+    <span class="price">{{ note.price }}&euro;</span>
+
+    <div class="flexed">
+        <ng-container *ngFor="let people of selectedPeoples$ | async; last as last">
+            <app-people [people]="people" (clicked)="removePeople(people)"></app-people>
+        </ng-container>
+
+        <ng-container *ngFor="let people of otherPeople$ | async; last as last">
+            <app-people [grayed]="true" [people]="people" (clicked)="addPeople(people)"></app-people>
+        </ng-container>
+
+        <button mat-button color="primary" (click)="delete()" data-html2canvas-ignore>
+            <mat-icon>delete</mat-icon>
+        </button>
+    </div>
+</div>
