@@ -10,6 +10,8 @@ interface Sum {
   value: number,
 }
 
+const CLEAN_NUMBER_RE = /([0-9 ]+)(\.)?([0-9 ]){0,2}/;
+
 @Component({
   selector: 'app-results',
   templateUrl: './results.component.html',
@@ -21,7 +23,7 @@ export class ResultsComponent implements OnInit {
   private peoples$ = this.store$.select(selectPeoples);
   private links$ = this.store$.select(selectNoteLinks);
 
-  public sums$: Observable<{ peoples: Sum[]; total: number }> = combineLatest([
+  public sums$: Observable<{ peoples: Sum[]; total: number; totalDisplay: string }> = combineLatest([
     this.notes$,
     this.peoples$,
     this.links$,
@@ -45,6 +47,7 @@ export class ResultsComponent implements OnInit {
 
       return {
         total,
+        totalDisplay: CLEAN_NUMBER_RE.exec(String(total))?.[0] ?? '',
         peoples: Object.values(peopleMap).map((x) => ({
           ...x,
           value: this.round(x.value),

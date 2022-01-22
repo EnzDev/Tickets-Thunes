@@ -1,5 +1,5 @@
 <div>
-    <span i18n>Total: </span> {{ (sums$ | async)?.total }}&euro;
+    <span i18n>Total: </span> {{ (sums$ | async)?.totalDisplay }}&euro;
     <ng-container *ngIf="diff$ | async as diff">
         &nbsp;<span *ngIf="!diff.ok">({{diff.v}}&euro;&ngsp;<ng-container i18n>à répartir.</ng-container>)</span>
     </ng-container>
