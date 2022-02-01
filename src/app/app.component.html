@@ -26,7 +26,7 @@
     </mat-toolbar>
     <mat-sidenav-container class="container" fxFlex="1 1 auto">
         <mat-sidenav-content style="padding: 1em; height: calc(100% - 2em)">
-            <div #saveScreen class="mat-app-background">
+            <div #saveScreen class="mat-app-background" [class.screen]="screenshot$ | async">
                 <app-ticket></app-ticket>
                 <br>
                 <app-results></app-results>

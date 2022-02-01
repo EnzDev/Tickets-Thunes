@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { Store } from '@ngrx/store';
-import { selectNotes, State } from '@store';
+import { selectNotes, selectScreenshot, State } from '@store';
 import { NotePeopleLinkActions } from '@store/note-people-link/note-people-link.actions';
 import { NotesActions } from '@store/notes/notes.actions';
 
@@ -11,6 +11,7 @@ import { NotesActions } from '@store/notes/notes.actions';
 })
 export class TicketComponent {
   public notes$ = this.store$.select(selectNotes);
+  public screenshot$ = this.store$.select(selectScreenshot);
 
   constructor(
     private store$: Store<State>,

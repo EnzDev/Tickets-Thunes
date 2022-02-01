@@ -1,5 +1,5 @@
-<mat-list xmlns="http://www.w3.org/1999/html">
-    <mat-list-item *ngFor="let note of (notes$ | async)" style="height: initial">
+<mat-list xmlns="http://www.w3.org/1999/html" [class.screen]="screenshot$ | async">
+    <mat-list-item *ngFor="let note of (notes$ | async)" style="height: initial" [class.screen]="screenshot$ | async">
         <app-note [id]="note.id"></app-note>
     </mat-list-item>
 </mat-list>

@@ -2,10 +2,11 @@ import { Component, ElementRef, ViewChild } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Store } from '@ngrx/store';
-import { selectTheme, State } from '@store';
+import { selectScreenshot, selectTheme, State } from '@store';
 import { ThemeActions } from '@store/theme/theme.actions';
 import html2canvas from 'html2canvas';
-import { map } from 'rxjs/operators';
+import { of } from 'rxjs';
+import { delay, map } from 'rxjs/operators';
 
 @Component({
   selector: 'app-root',
@@ -17,12 +18,14 @@ export class AppComponent {
   public darkMode$ = this.store$.select(selectTheme).pipe(
     map((theme) => theme === 'dark'),
   );
+  public screenshot$ = this.store$.select(selectScreenshot);
   public shouldOpen = false;
 
   @ViewChild('saveScreen', { read: ElementRef })
   public saveScreen ?: ElementRef;
 
   constructor(private mo: MediaObserver, private store$: Store<State>) {
+    this.store$.dispatch(ThemeActions.setScreenShot({ screenshot: false }));
   }
 
   get mediaShort() { return this.mo.isActive('lt-md'); }
@@ -42,15 +45,12 @@ export class AppComponent {
    * And export as image
    */
   public async save() {
+    this.store$.dispatch(ThemeActions.setScreenShot({ screenshot: true }));
+    await of().pipe(delay(100)).toPromise()
     let canvas = await html2canvas(this.saveScreen!.nativeElement, {
-      height: Array.from(this.saveScreen!.nativeElement.children).map((value: any) => value.offsetHeight).reduce((
-        a,
-        b,
-      ) => a + b),
-      windowHeight: Array.from(this.saveScreen!.nativeElement.children).map((value: any) => value.offsetHeight).reduce(
-        (a, b) => a + b),
+
       allowTaint: false,
-      logging: true,
+      logging: false,
       removeContainer: false,
       scale: 2,
     });
@@ -75,5 +75,6 @@ export class AppComponent {
 
     a.remove();
     canvas.remove();
+    this.store$.dispatch(ThemeActions.setScreenShot({ screenshot: false }));
   }
 }

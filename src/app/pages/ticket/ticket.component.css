@@ -1,0 +1,10 @@
+mat-list.screen {
+    display: flex;
+    flex-direction: row;
+    max-width: 100%;
+    flex-wrap: wrap;
+}
+
+mat-list-item.screen {
+    width: auto;
+}

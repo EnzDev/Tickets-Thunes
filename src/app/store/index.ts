@@ -47,6 +47,10 @@ export const selectTheme = createSelector(
   selectThemeState,
   (themeState) => themeState.theme
 );
+export const selectScreenshot = createSelector(
+  selectThemeState,
+  (themeState) => !!themeState.screenshot
+);
 
 export const selectNotesState = createFeatureSelector<fromNotes.State>(fromNotes.FEATURE_KEY);
 export const selectNotes = createSelector(

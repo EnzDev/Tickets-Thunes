@@ -14,7 +14,12 @@ export const initialState: State = {
 const themeReducer = createReducer(
   initialState,
   on(ThemeActions.setTheme, (state, { theme }) => ({
+    ...state,
     theme: theme,
+  })),
+  on(ThemeActions.setScreenShot, (state, { screenshot }) => ({
+    ...state,
+    screenshot: screenshot,
   })),
 );
 
