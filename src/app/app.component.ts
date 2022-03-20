@@ -46,9 +46,11 @@ export class AppComponent {
    */
   public async save() {
     this.store$.dispatch(ThemeActions.setScreenShot({ screenshot: true }));
-    await of().pipe(delay(100)).toPromise()
+    await of().pipe(delay(100)).toPromise();
     let canvas = await html2canvas(this.saveScreen!.nativeElement, {
-
+      windowWidth: 2000,
+      width: 2000,
+      backgroundColor: "#303030",
       allowTaint: false,
       logging: false,
       removeContainer: false,
@@ -66,7 +68,7 @@ export class AppComponent {
     const time = [
       String(now.getHours()).padStart(2, '0'),
       String(now.getMinutes()).padStart(2, '0'),
-    ].join('h')
+    ].join('h');
 
     // toDataURL defaults to png, so we need to request a jpeg, then convert for file download.
     a.href = canvas.toDataURL('image/jpeg').replace('image/jpeg', 'image/octet-stream');
