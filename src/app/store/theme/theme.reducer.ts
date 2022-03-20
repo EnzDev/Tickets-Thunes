@@ -8,7 +8,7 @@ export interface State extends Theme {}
 
 
 export const initialState: State = {
-  theme: 'light',
+  theme: 'dark',
 };
 
 const themeReducer = createReducer(

@@ -1,7 +1,7 @@
 mat-list.screen {
     display: flex;
     flex-direction: row;
-    width: 2000px;
+    width: 1500px;
     flex-wrap: wrap;
 }
 

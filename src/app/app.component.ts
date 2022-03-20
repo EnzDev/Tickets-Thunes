@@ -15,6 +15,7 @@ import { delay, map } from 'rxjs/operators';
 })
 export class AppComponent {
   title = 'TicketThunes';
+  public theme$ = this.store$.select(selectTheme)
   public darkMode$ = this.store$.select(selectTheme).pipe(
     map((theme) => theme === 'dark'),
   );
@@ -51,13 +52,14 @@ export class AppComponent {
    * Generate a canvas from the DOM using html2canvas
    * And export as image
    */
-  public async save() {
+  public async save(light: boolean) {
     this.store$.dispatch(ThemeActions.setScreenShot({ screenshot: true }));
     await of().pipe(delay(100)).toPromise();
+
     let canvas = await html2canvas(this.saveScreen!.nativeElement, {
-      windowWidth: 2000,
-      width: 2000,
-      backgroundColor: "#303030",
+      windowWidth: 1500,
+      width: 1500,
+      backgroundColor: light ? '#fafafa' : '#303030',
       allowTaint: false,
       logging: false,
       removeContainer: false,

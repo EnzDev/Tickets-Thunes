@@ -6,8 +6,9 @@
             <span fxHide fxShow.lt-sm i18n></span>
         </h1>
         <span fxFlex="1 1 auto"></span>
-        <span fxLayout fxLayoutAlign="center center" fxLayoutGap="10px">
-            <button (click)="save()" color="primary" i18n-matTooltip="Save as image"
+        <span fxLayout fxLayoutAlign="center center" fxLayoutGap="10px" *ngIf="theme$ | async as theme">
+            <button (click)="save(theme === 'light')" color="primary"
+                    i18n-matTooltip="Save as image"
                     mat-icon-button matTooltip="Save as image">
                 <mat-icon>save</mat-icon>
             </button>
