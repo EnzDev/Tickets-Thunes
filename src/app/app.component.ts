@@ -19,6 +19,7 @@ export class AppComponent {
     map((theme) => theme === 'dark'),
   );
   public screenshot$ = this.store$.select(selectScreenshot);
+  public showInfo = false;
   public shouldOpen = false;
 
   @ViewChild('saveScreen', { read: ElementRef })
@@ -30,8 +31,14 @@ export class AppComponent {
 
   get mediaShort() { return this.mo.isActive('lt-md'); }
 
-  toggleSideNav(): void {
+  setInfo() {
+    this.showInfo = !this.showInfo;
     this.shouldOpen = !this.shouldOpen;
+  }
+
+  toggleSideNav(toggle ?: boolean): void {
+    this.showInfo = false; // Closing
+    this.shouldOpen = toggle ?? !this.shouldOpen;
   }
 
   setTheme($event: MatSlideToggleChange): void {

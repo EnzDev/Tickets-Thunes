@@ -1,20 +1,20 @@
-<div [class.dark-theme]="darkMode$ | async" class="mat-app-background" [style.height]="'100%'" fxLayout="column">
+<div [class.dark-theme]="darkMode$ | async" [style.height]="'100%'" class="mat-app-background" fxLayout="column">
     <mat-toolbar>
         <h1 fxLayout fxLayoutAlign="center center" fxLayoutGap="10px">
             <mat-icon>price_change</mat-icon>
-            <span i18n fxHide.lt-sm>TriCount complex helper</span>
-            <span i18n fxHide fxShow.lt-sm>TriCount</span>
+            <span fxHide.lt-sm i18n>TriCount complex helper</span>
+            <span fxHide fxShow.lt-sm i18n></span>
         </h1>
         <span fxFlex="1 1 auto"></span>
         <span fxLayout fxLayoutAlign="center center" fxLayoutGap="10px">
-                <button mat-icon-button matTooltip="Save as image" i18n-matTooltip="Save as image"
-                        color="primary" (click)="save()">
-        <mat-icon>save</mat-icon>
-    </button>
-            <button mat-icon-button
-                    (click)="toggleSideNav()"
-                    fxHide fxShow.lt-md>
-                <mat-icon [color]="shouldOpen ? 'accent' : 'primary'">
+            <button (click)="save()" color="primary" i18n-matTooltip="Save as image"
+                    mat-icon-button matTooltip="Save as image">
+                <mat-icon>save</mat-icon>
+            </button>
+            <button (click)="toggleSideNav()"
+                    fxHide
+                    fxShow.lt-md mat-icon-button>
+                <mat-icon [color]="shouldOpen && !showInfo ? 'accent' : 'primary'">
                     groups
                 </mat-icon>
             </button>
@@ -22,23 +22,51 @@
             <mat-icon [inline]="true" color="accent">light_mode</mat-icon>
             <mat-slide-toggle (change)="setTheme($event)" [checked]="darkMode$ | async"
                               color="primary"></mat-slide-toggle>
-            <mat-icon [inline]="true" color="primary">dark_mode</mat-icon></span>
+            <mat-icon [inline]="true" color="primary">dark_mode</mat-icon>
+            <span fxFlex="1 1 auto"></span>
+            <button (click)="setInfo()" color="primary" i18n-matTooltip="About"
+                    mat-icon-button matTooltip="About">
+                <mat-icon [color]="shouldOpen && showInfo ? 'accent' : 'primary'">
+                    {{showInfo ? 'close' : 'info'}}
+                </mat-icon>
+            </button>
+        </span>
     </mat-toolbar>
     <mat-sidenav-container class="container" fxFlex="1 1 auto">
         <mat-sidenav-content style="padding: 1em; height: calc(100% - 2em)">
-            <div #saveScreen class="mat-app-background" [class.screen]="screenshot$ | async">
+            <div #saveScreen [class.screen]="screenshot$ | async" class="mat-app-background">
                 <app-ticket></app-ticket>
                 <br>
                 <app-results></app-results>
             </div>
         </mat-sidenav-content>
         <mat-sidenav
+                (closed)="toggleSideNav(false)"
                 [disableClose]="!mediaShort"
+                [mode]="mediaShort ? 'over' : 'side'"
                 [opened]="!mediaShort || shouldOpen"
-                (closed)="shouldOpen = false"
-                position="end"
-                [mode]="mediaShort ? 'over' : 'side'">
-            <app-peoples></app-peoples>
+                [style.min-width]="'20vw'"
+                position="end">
+
+            <app-peoples *ngIf="!showInfo else info"></app-peoples>
+            <ng-template #info>
+                <div class="info">
+                    <code>
+                        Coucou, j'ai fait ce p'tit projet pour
+                        gérer les finances à la maison et partager
+                        les tickets de courses équitablement en
+                        fonction de la consomation des gens.
+                        <br><br>
+                        Le code source est dispo sur
+                        <a href="https://github.com/EnzDev/Tickets-Thunes" rel="noreferrer noopener nofollow"
+                           target="_blank">Github TicketThunes</a>.
+                    </code>
+                    <code [style.text-align]="'right'">
+                        Made with ❤️ by <a href="https://github.com/EnzDev" rel="noreferrer noopener nofollow"
+                                           target="_blank">EnzDev</a>.
+                    </code>
+                </div>
+            </ng-template>
         </mat-sidenav>
     </mat-sidenav-container>
 </div>

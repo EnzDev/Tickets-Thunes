@@ -1,3 +1,26 @@
 .screen {
     max-height: calc(100vh - 64px) !important;
 }
+
+mat-sidenav .info {
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+mat-sidenav code {
+    max-width: 520px;
+    display: block;
+    padding: 15px;
+    text-align: justify;
+    font-family: monospace;
+}
+
+mat-sidenav code a {
+    color: #d9f7a8;
+}
+
+mat-sidenav code a:visited {
+    color: #7dcc39;
+}
