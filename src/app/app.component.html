@@ -2,7 +2,7 @@
     <mat-toolbar>
         <h1 fxLayout fxLayoutAlign="center center" fxLayoutGap="10px">
             <mat-icon>price_change</mat-icon>
-            <span fxHide.lt-sm i18n>TriCount complex helper</span>
+            <span fxHide.lt-sm i18n>Ticket Thunes</span>
             <span fxHide fxShow.lt-sm i18n></span>
         </h1>
         <span fxFlex="1 1 auto"></span>
@@ -25,7 +25,7 @@
                               color="primary"></mat-slide-toggle>
             <mat-icon [inline]="true" color="primary">dark_mode</mat-icon>
             <span fxFlex="1 1 auto"></span>
-            <button (click)="setInfo()" color="primary" i18n-matTooltip="About"
+            <button (click)="toggleInfo()" color="primary" i18n-matTooltip="About"
                     mat-icon-button matTooltip="About">
                 <mat-icon [color]="shouldOpen && showInfo ? 'accent' : 'primary'">
                     {{showInfo ? 'close' : 'info'}}
@@ -63,8 +63,8 @@
                            target="_blank">Github TicketThunes</a>.
                     </code>
                     <code [style.text-align]="'right'">
-                        Made with ❤️ by <a href="https://github.com/EnzDev" rel="noreferrer noopener nofollow"
-                                           target="_blank">EnzDev</a>.
+                        Made with &#10084;&#65039;️ by <a href="https://github.com/EnzDev" rel="noreferrer noopener nofollow"
+                                                  target="_blank">EnzDev</a>.
                     </code>
                 </div>
             </ng-template>

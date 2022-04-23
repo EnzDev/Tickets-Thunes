@@ -32,7 +32,7 @@ export class AppComponent {
 
   get mediaShort() { return this.mo.isActive('lt-md'); }
 
-  setInfo() {
+  toggleInfo() {
     this.showInfo = !this.showInfo;
     this.shouldOpen = !this.shouldOpen;
   }

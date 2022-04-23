@@ -14,7 +14,7 @@
     </mat-card-content>
     <mat-card-actions *ngIf="people$ | async as people">
         <div fxLayout fxLayoutAlign="space-evenly" fxFill *ngIf="color$ | async as color">
-            <app-colored-circle [color]="color"></app-colored-circle>
+            <app-colored-circle></app-colored-circle>
             <div class="spacer"></div>
             <app-people [people]="people"></app-people>
         </div>

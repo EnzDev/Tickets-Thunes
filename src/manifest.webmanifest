@@ -1,13 +1,14 @@
 {
   "name": "Ticket Thunes",
-  "short_name": "Ticket Thunes",
-  "description": "Computes shares on receipts.",
+  "short_name": "TicketThunes",
+  "description": "A tool that helps computing shares on receipts",
   "theme_color": "#613583",
   "background_color": "#241d61",
   "display": "standalone",
   "orientation": "any",
-  "scope": "./",
-  "start_url": "./",
+  "scope": "/",
+  "start_url": "/",
+  "categories": ["finance", "productivity", "utilities", "shopping"],
   "icons": [
       {
         "src": "assets/icons/maskable_icon_x48.png",
