@@ -6,6 +6,7 @@ import { environment } from 'src/environments/environment';
 
 import * as fromPeople from './peoples/peoples.reducer';
 import * as fromTheme from './theme/theme.reducer';
+import * as fromEditorColor from './editor-color/editor-color.reducer';
 import * as fromNotes from './notes/notes.reducer';
 import * as fromNoteLinks from './note-people-link/note-people-link.reducer';
 
@@ -16,6 +17,7 @@ export interface State {
   [fromTheme.FEATURE_KEY]: fromTheme.State;
   [fromNotes.FEATURE_KEY]: fromNotes.State;
   [fromNoteLinks.FEATURE_KEY]: fromNoteLinks.State;
+  [fromEditorColor.FEATURE_KEY]: fromEditorColor.State;
 }
 
 export const reducers: ActionReducerMap<State> = {
@@ -23,6 +25,7 @@ export const reducers: ActionReducerMap<State> = {
   [fromTheme.FEATURE_KEY]: fromTheme.reducer,
   [fromNotes.FEATURE_KEY]: fromNotes.reducer,
   [fromNoteLinks.FEATURE_KEY]: fromNoteLinks.reducer,
+  [fromEditorColor.FEATURE_KEY]: fromEditorColor.reducer,
 };
 
 export const effects: Type<any>[] = [];
@@ -70,4 +73,10 @@ export const selectNoteLinks = createSelector(
 export const selectNotesByNoteId = (id: Note['id']) => createSelector(
   selectNoteLinks,
   (notesLinks) => notesLinks.filter(thisLink => thisLink.note_id === id)
+);
+
+export const selectColorState = createFeatureSelector<fromEditorColor.State>(fromEditorColor.FEATURE_KEY);
+export const selectColor = createSelector(
+  selectColorState,
+  (colorState) => colorState.color
 );

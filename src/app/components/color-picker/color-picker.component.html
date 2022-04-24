@@ -1,22 +1,20 @@
 <mat-card>
     <mat-card-content>
-        <app-lightness-pointer *ngIf="satLight$ | async as initial"
-                               [initialSL]="initial"
-                               (color)="setSL($event)"
-                               [hue]="(hue$ | async)!">
-        </app-lightness-pointer>
+        <canvas #canvasLight class="lightness-pointer" [width]="height" [height]="height"
+                (mousedown)="this.selecting = 'light'; move($event)"
+                (mousemove)="move($event)">
+        </canvas>
         <span>&nbsp;</span>
-        <app-color-slider *appIfNotNull="hue$ | async as initial"
-                          [initialHue]="initial"
-                          (hue)="setHue($event)">
-
-        </app-color-slider>
+        <canvas #canvasColor class="color-slider" [width]="width" [height]="height"
+                (mousedown)="this.selecting = 'color'; move($event)"
+                (mousemove)="move($event)">
+        </canvas>
     </mat-card-content>
     <mat-card-actions *ngIf="people$ | async as people">
         <div fxLayout fxLayoutAlign="space-evenly" fxFill *ngIf="color$ | async as color">
-            <app-colored-circle></app-colored-circle>
+            <app-colored-circle [color]="color"></app-colored-circle>
             <div class="spacer"></div>
-            <app-people [people]="people"></app-people>
+            <app-people (clicked)="nextColor()" [people]="people"></app-people>
         </div>
     </mat-card-actions>
 </mat-card>

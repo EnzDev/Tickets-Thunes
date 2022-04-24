@@ -1,9 +1,10 @@
 import { Component, OnInit } from '@angular/core';
 import { People } from '@models/people';
 import { Store } from '@ngrx/store';
-import { selectPeoples, State } from '@store';
+import { selectColor, selectPeoples, State } from '@store';
+import { EditorColorActions } from '@store/editor-color/editor-color.actions';
 import { PeopleActions } from '@store/peoples/people.actions';
-import { BehaviorSubject, Observable } from 'rxjs';
+import { Observable } from 'rxjs';
 
 @Component({
   selector: 'app-peoples',
@@ -13,7 +14,7 @@ import { BehaviorSubject, Observable } from 'rxjs';
 export class PeoplesComponent implements OnInit {
   public peoples$: Observable<People[]> = this.store$.select(selectPeoples);
 
-  public currentColor$ = new BehaviorSubject<string>(this.getRandomColor());
+  public currentColor$ = this.store$.select(selectColor);
 
   constructor(
     private store$: Store<State>,
@@ -22,25 +23,19 @@ export class PeoplesComponent implements OnInit {
   ngOnInit(): void {
   }
 
-  getRandomColor() {
-    return '#' + [ 0, 0, 0 ]
-      .map(() => Math.floor(0xff * Math.random()))
-      .map((c) => c.toString(16).padStart(2, '0'))
-      .join('');
-  }
-
-  public addPeople(newPeopleInput: HTMLInputElement) {
+  public addPeople({ value: name }: HTMLInputElement, color: string) {
     this.store$.dispatch(PeopleActions.addPeople({
       people: {
-        id: Math.floor(Math.random() * 0xFFFF),
-        name: newPeopleInput.value,
-        color: this.currentColor$.value,
+        id: Math.floor(Math.random() * 0xFFFFFF),
+        name,
+        color,
       },
     }));
-    this.currentColor$.next(this.getRandomColor());
+
+    this.store$.dispatch(EditorColorActions.nextRandom());
   }
 
   deletePeople(people: People): void {
-    this.store$.dispatch(PeopleActions.deletePeople({id: people.id}))
+    this.store$.dispatch(PeopleActions.deletePeople({ id: people.id }));
   }
 }

@@ -1,5 +1,5 @@
 import { Component, Input, OnChanges, OnInit, SimpleChanges } from '@angular/core';
-import { Subject } from 'rxjs';
+import { BehaviorSubject } from 'rxjs';
 
 @Component({
   selector: 'app-colored-circle',
@@ -9,14 +9,11 @@ import { Subject } from 'rxjs';
 export class ColoredCircleComponent implements OnInit, OnChanges {
 
   @Input()
-  public color: string | null = '#fff';
+  public color: string | null = null;
 
-  public color$ = new Subject<string>();
-
-  constructor() { }
+  public color$ = new BehaviorSubject<string>(this.color ?? '#fff');
 
   ngOnChanges(changes: SimpleChanges): void {
-    console.log(changes);
     this.color$.next(changes.color.currentValue);
   }
 

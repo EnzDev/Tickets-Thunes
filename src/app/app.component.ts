@@ -1,4 +1,5 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { DOCUMENT } from '@angular/common';
+import { Component, ElementRef, Inject, Renderer2, ViewChild } from '@angular/core';
 import { MediaObserver } from '@angular/flex-layout';
 import { MatSlideToggleChange } from '@angular/material/slide-toggle';
 import { Store } from '@ngrx/store';
@@ -7,6 +8,7 @@ import { ThemeActions } from '@store/theme/theme.actions';
 import html2canvas from 'html2canvas';
 import { of } from 'rxjs';
 import { delay, map } from 'rxjs/operators';
+import { CheckForUpdateService } from './services/check-for-update.service';
 
 @Component({
   selector: 'app-root',
@@ -26,8 +28,20 @@ export class AppComponent {
   @ViewChild('saveScreen', { read: ElementRef })
   public saveScreen ?: ElementRef;
 
-  constructor(private mo: MediaObserver, private store$: Store<State>) {
+  constructor(
+    private mo: MediaObserver,
+    private store$: Store<State>,
+    up: CheckForUpdateService,
+    @Inject(DOCUMENT) private document: Document,
+    private renderer: Renderer2,
+  ) {
     this.store$.dispatch(ThemeActions.setScreenShot({ screenshot: false }));
+
+    this.darkMode$.subscribe({
+      next: enabled => enabled
+        ? renderer.addClass(document.body, 'dark-theme')
+        : renderer.removeClass(document.body, 'dark-theme')
+    })
   }
 
   get mediaShort() { return this.mo.isActive('lt-md'); }
