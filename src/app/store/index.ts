@@ -40,6 +40,16 @@ export const selectPeoples = createSelector(
   selectPeopleState,
   fromPeople.selectAll,
 );
+export const selectEditedPeopleId = createSelector(
+  selectPeopleState,
+  ({editing}) => editing
+);
+export const selectEditedPeople = createSelector(
+  selectPeopleState,
+  ({editing, entities}) => editing
+    ? entities[editing]
+    : undefined
+);
 export const selectPeoplesById = createSelector(
   selectPeopleState,
   fromPeople.selectEntities,

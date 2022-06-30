@@ -1,31 +1,24 @@
 <mat-card>
     <mat-card-title i18n>Peoples</mat-card-title>
     <mat-card-content>
-        <mat-list>
-            <mat-chip-list *ngFor="let people of (peoples$ |async)">
-                <button mat-button color="primary" (click)="deletePeople(people)">
-                    <mat-icon>delete</mat-icon>
-                </button>
-                <app-people [people]="people"></app-people>
+        <mat-list disableRipple>
+            <mat-chip-list [value]="'lol'" [disabled]="true" [selectable]="false" *ngFor="let people of (peoples$ |async)">
+                <ng-container *ngIf="(edited$ | async) === people.id; else showNameAction">
+                    <app-edit-people [id]="people.id" [name]="people.name"></app-edit-people>
+                </ng-container>
+
+                <ng-template #showNameAction>
+                    <button mat-icon-button color="primary" (click)="deletePeople(people)">
+                        <mat-icon>delete</mat-icon>
+                    </button>
+                    <button mat-icon-button color="primary" (click)="startEditPeople(people)">
+                        <mat-icon color="primary">edit</mat-icon>
+                    </button>
+                    <app-people [people]="people"></app-people>
+                </ng-template>
             </mat-chip-list>
         </mat-list>
 
-        <div fxLayoutAlign="center center" *ngIf="currentColor$ | async as color">
-            <mat-form-field appearance="standard" color="accent">
-                <mat-label i18n>New person</mat-label>
-                <input #newPeopleInput matInput i18n-placeholder="Name" placeholder="Name"/>
-                <button matSuffix
-                        mat-icon-button
-                        color="accent" (click)="addPeople(newPeopleInput, color)">
-                    <mat-icon>person_add</mat-icon>
-                </button>
-                <mat-hint i18n>Enter the name of the person</mat-hint>
-            </mat-form-field>
-            <app-colored-circle [matMenuTriggerFor]="menu" [color]="color"></app-colored-circle>
-            <mat-menu #menu="matMenu">
-                <app-color-picker (click)="$event.stopPropagation()"></app-color-picker>
-            </mat-menu>
-        </div>
-
+        <app-new-people fxLayoutAlign="center center" *ngIf="!(edited$ | async)"></app-new-people>
     </mat-card-content>
 </mat-card>

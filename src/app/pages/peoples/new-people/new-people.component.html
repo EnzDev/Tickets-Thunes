@@ -1,0 +1,16 @@
+<ng-container *ngIf="currentColor$ | async as color">
+    <mat-form-field appearance="standard" color="accent">
+        <mat-label i18n>New person</mat-label>
+        <input #newPeopleInput matInput i18n-placeholder="Name" placeholder="Name"/>
+        <button matSuffix
+                mat-icon-button
+                color="accent" (click)="addPeople(newPeopleInput, color)">
+            <mat-icon>person_add</mat-icon>
+        </button>
+        <mat-hint i18n>Enter the name of the person</mat-hint>
+    </mat-form-field>
+    <app-colored-circle [matMenuTriggerFor]="menu" [color]="color"></app-colored-circle>
+    <mat-menu #menu="matMenu">
+        <app-color-picker (click)="$event.stopPropagation()"></app-color-picker>
+    </mat-menu>
+</ng-container>

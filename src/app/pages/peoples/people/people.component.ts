@@ -9,7 +9,7 @@ import { People } from '@models/people';
 export class PeopleComponent implements OnInit, OnChanges {
   @Input()
   public people !: People;
-  public peopleStyle: any;
+  public peopleStyle: {[style: string]: string} | null = null;
 
   @Input()
   public grayed: boolean = false;
@@ -49,6 +49,19 @@ export class PeopleComponent implements OnInit, OnChanges {
     }
   }
 
+  private extractComponent(color: string) : [number, number, number] {
+    let rHex, gHex, bHex;
+    if (color.length === 4)
+      [ rHex, gHex, bHex ] = color.slice(1, 4);
+    else {
+      rHex = color.slice(1, 3);
+      gHex = color.slice(3, 5);
+      bHex = color.slice(5, 7);
+    }
+
+    return [ rHex, gHex, bHex ].map(c => Number(`0x${ c }`) / 255) as [number, number, number];
+  }
+
   /**
    * Use light reflectancy to estimate if we need to use black or white
    * as foreground color on the provided color.
@@ -57,32 +70,15 @@ export class PeopleComponent implements OnInit, OnChanges {
    * @private
    */
   private getBestColor(color: string): string {
-    let rHex, gHex, bHex;
-    if (color.length === 4)
-      [ rHex, gHex, bHex ] = color.slice(1, 4);
-    else {
-      rHex = color.slice(1, 3);
-      gHex = color.slice(3, 5);
-      bHex = color.slice(5, 7);
-    }
-
-    const [ rv, gv, bv ] = [ rHex, gHex, bHex ].map(c => Number(`0x${ c }`) / 255);
+    const [ rv, gv, bv ] = this.extractComponent(color);
 
     const lr = 21.25 * rv + 71.54 * gv + 7.21 * bv;
     return lr > 70 ? '#000' : '#fff';
   }
 
   private grayColor(color: string): string {
-    let rHex, gHex, bHex;
-    if (color.length === 4)
-      [ rHex, gHex, bHex ] = color.slice(1, 4);
-    else {
-      rHex = color.slice(1, 3);
-      gHex = color.slice(3, 5);
-      bHex = color.slice(5, 7);
-    }
+    const [ rv, gv, bv ] = this.extractComponent(color);
 
-    const [ rv, gv, bv ] = [ rHex, gHex, bHex ].map(c => Number(`0x${ c }`) / 255);
     const mean = Math.floor((rv + gv + bv) / 3).toString(16).padStart(2, '0')
     return `0x${mean}${mean}${mean}`
   }

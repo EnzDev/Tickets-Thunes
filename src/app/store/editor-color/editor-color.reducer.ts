@@ -1,14 +1,17 @@
 import { Action, createReducer, on } from '@ngrx/store';
 import { EditorColorActions } from '@store/editor-color/editor-color.actions';
-import { hsla, toHex } from 'color2k';
+import { hsla, toHex, parseToHsla } from 'color2k';
 
 export const FEATURE_KEY = 'color-picker';
 
-export interface State {
-  color: string,
+interface Color {
   hue: number,
   light: number,
   saturation: number,
+}
+
+export interface State extends Color{
+  color: string,
 }
 
 const randomNormals = () => {
@@ -50,6 +53,11 @@ function getStateRandomColor(): State {
 
 export const initialState: State = getStateRandomColor();
 
+function getHsla(color: string): Color {
+  let [hue, saturation, light] = parseToHsla(color)
+  return { hue, saturation, light };
+}
+
 const editorColorReducer = createReducer(
   initialState,
   on(EditorColorActions.setSaturation, (state, { saturation }) => ({
@@ -66,6 +74,10 @@ const editorColorReducer = createReducer(
     ...state,
     light,
     color: toHex(hsla(state.hue, state.saturation, light, 1)),
+  })),
+  on(EditorColorActions.setColor, (state, { color }) => ({
+    ...getHsla(color),
+    color,
   })),
   on(EditorColorActions.nextRandom, () => getStateRandomColor()),
 );

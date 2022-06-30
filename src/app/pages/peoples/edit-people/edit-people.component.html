@@ -1,0 +1,22 @@
+<ng-container *ngIf="currentColor$ | async as color">
+    <mat-form-field appearance="standard" color="accent">
+        <mat-label i18n>Edit name</mat-label>
+        <input [(ngModel)]="name" matInput i18n-placeholder="Name" placeholder="Name"/>
+        <button mat-icon-button color="accent"
+                matSuffix
+                (click)="stopEditPeople()">
+            <mat-icon>close</mat-icon>
+        </button>
+        <button mat-icon-button color="accent"
+                matSuffix
+                (click)="savePeople(color)">
+            <mat-icon>save</mat-icon>
+        </button>
+        <mat-hint i18n>Enter the name of the person</mat-hint>
+    </mat-form-field>
+
+    <app-colored-circle [matMenuTriggerFor]="menuE" [color]="color"></app-colored-circle>
+    <mat-menu #menuE="matMenu">
+        <app-color-picker (click)="$event.stopPropagation()"></app-color-picker>
+    </mat-menu>
+</ng-container>

@@ -28,6 +28,8 @@ import { AppComponent } from './app.component';
 import { ColorPickerComponent } from './components/color-picker/color-picker.component';
 import { ColoredCircleComponent } from './components/colored-circle/colored-circle.component';
 import { IfNotNullDirective } from './directives/if-not-null.directive';
+import { EditPeopleComponent } from './pages/peoples/edit-people/edit-people.component';
+import { NewPeopleComponent } from './pages/peoples/new-people/new-people.component';
 import { PeopleComponent } from './pages/peoples/people/people.component';
 import { PeoplesComponent } from './pages/peoples/peoples.component';
 import { ResultsComponent } from './pages/results/results.component';
@@ -39,6 +41,8 @@ import { CheckForUpdateService } from './services/check-for-update.service';
   declarations: [
     AppComponent,
     PeopleComponent,
+    NewPeopleComponent,
+    EditPeopleComponent,
     PeoplesComponent,
     ColorPickerComponent,
     ColoredCircleComponent,
@@ -80,5 +84,6 @@ import { CheckForUpdateService } from './services/check-for-update.service';
   ],
   providers: [ CheckForUpdateService ],
   bootstrap: [ AppComponent ],
+  exports: [ ColoredCircleComponent ],
 })
 export class AppModule {}
